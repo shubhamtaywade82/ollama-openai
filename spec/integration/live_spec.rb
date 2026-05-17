@@ -4,7 +4,10 @@
 # Excluded by default; run with: INTEGRATION=1 bundle exec rspec spec/integration
 
 RSpec.describe Ollama::Openai::Client, :integration do
-  before { |ex| IntegrationHelper.skip_unless_live!(ex, requires_chat: true) }
+  before do
+    reason = IntegrationHelper.skip_reason(requires_chat: true)
+    skip(reason) if reason
+  end
 
   let(:client) { described_class.new(uri_base: IntegrationHelper::OLLAMA_URL) }
   let(:model) { IntegrationHelper.chat_model }
@@ -37,7 +40,10 @@ RSpec.describe Ollama::Openai::Client, :integration do
   end
 
   context "with an embedding model available" do
-    before { |ex| IntegrationHelper.skip_unless_live!(ex, requires_embed: true) }
+    before do
+      reason = IntegrationHelper.skip_reason(requires_embed: true)
+      skip(reason) if reason
+    end
 
     it "embeds in OpenAI envelope" do
       res = client.embeddings(parameters: { model: IntegrationHelper.embed_model, input: "hi" })
