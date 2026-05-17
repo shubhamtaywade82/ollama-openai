@@ -5,6 +5,8 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in ollama-openai.gemspec
 gemspec
 
+gem "ollama-client", path: "../ollama-client"
+
 gem "irb"
 gem "rake", "~> 13.0"
 
